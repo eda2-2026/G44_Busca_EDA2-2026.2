@@ -56,8 +56,30 @@ def busca_sequencial(vetor, chave):
             return i
     return -1
 
+def busca_binaria(vetor_ordenado, chave):
+    """Busca em vetor ordenado, dividindo o espaço de busca ao meio a
+    cada tentativa. Complexidade: O(log n)."""
+    inicio, fim = 0, len(vetor_ordenado) - 1
+    while inicio <= fim:
+        meio = (inicio + fim) // 2
+        if vetor_ordenado[meio] == chave:
+            return meio
+        elif vetor_ordenado[meio] < chave:
+            inicio = meio + 1
+        else:
+            fim = meio - 1
+    return -1
+
 
 if __name__ == "__main__":
     nomes, info = carregar_dados()
     print(nomes[:5])
     print(info[nomes[0]])
+
+    vetor_teste = ["Brasil", "Argentina", "Chile", "Uruguai"]
+    print(busca_sequencial(vetor_teste, "Chile"))   # esperado: 2
+    print(busca_sequencial(vetor_teste, "XPTO"))    # esperado: -1
+
+    vetor_teste = sorted(["Brasil", "Argentina", "Chile", "Uruguai"])
+    print(busca_binaria(vetor_teste, "Chile"))
+    print(busca_binaria(vetor_teste, "XPTO"))
