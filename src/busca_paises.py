@@ -49,6 +49,13 @@ def carregar_dados():
     print(f"{len(nomes)} países obtidos e salvos em cache.")
     return nomes, info
 
+def busca_sequencial(vetor, chave):
+    """Percorre o vetor posição por posição. Complexidade: O(n). """
+    for i in range(len(vetor)):
+        if vetor[i] == chave:
+            return i
+    return -1
+
 
 if __name__ == "__main__":
     nomes, info = carregar_dados()
