@@ -3,21 +3,30 @@ Trabalho de Estruturas de Dados 2 - Algoritmos de Busca
 Consultor de Países — app que usa busca sequencial e binária como
 motor de busca sobre dados reais de países.
 """
-
+import json
+import os
 import requests
 
 API_URL = "https://raw.githubusercontent.com/mledoze/countries/master/dist/countries.json"
-
+CACHE_FILE = "paises_cache.json"
 
 def carregar_dados():
-    """Busca a lista de países e monta duas estruturas:
-    - nomes: lista de nomes (usada pelos algoritmos de busca)
-    - info: dicionário com detalhes de cada país (capital, região, área)
-    """
+    if os.path.exists(CACHE_FILE):
+        print(f"Carregando dados do cache local ({CACHE_FILE})...")
+        with open(CACHE_FILE, "r", encoding="utf-8") as f:
+            dados_salvos = json.load(f)
+        return dados_salvos["nomes"], dados_salvos["info"]
+
     print("Buscando dados de países no GitHub (mledoze/countries)...")
     resposta = requests.get(API_URL, timeout=15)
     resposta.raise_for_status()
     dados_brutos = resposta.json()
+
+    if not isinstance(dados_brutos, list):
+        raise RuntimeError(
+            "Os dados não vieram no formato esperado (lista de países). "
+            f"Resposta recebida: {dados_brutos}"
+        )
 
     nomes = []
     info = {}
@@ -34,7 +43,10 @@ def carregar_dados():
             "area": pais.get("area"),
         }
 
-    print(f"{len(nomes)} países obtidos.")
+    with open(CACHE_FILE, "w", encoding="utf-8") as f:
+        json.dump({"nomes": nomes, "info": info}, f, ensure_ascii=False, indent=2)
+
+    print(f"{len(nomes)} países obtidos e salvos em cache.")
     return nomes, info
 
 
