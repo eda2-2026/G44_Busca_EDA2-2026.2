@@ -200,7 +200,39 @@ def opcao_listar_por_regiao(info):
     for nome in sorted(encontrados):
         print(f"  - {nome}")
 
+def opcao_comparar_desempenho(nomes):
+    """Roda o benchmark completo e gera o gráfico comparativo."""
+    print("\nRodando o experimento de comparação de desempenho...\n")
+    resultados = rodar_experimento(nomes)
+    gerar_grafico(resultados)
 
+def menu_principal():
+    print("=" * 60)
+    print("   CONSULTOR DE PAÍSES — busca sequencial x busca binária")
+    print("=" * 60)
+
+    nomes, info = carregar_dados()
+    print(f"\nTotal de países disponíveis para consulta: {len(nomes)}")
+
+    while True:
+        print("\n--- MENU ---")
+        print("1 - Buscar informações de um país")
+        print("2 - Listar países por região")
+        print("3 - Comparar desempenho: Busca Sequencial x Busca Binária")
+        print("4 - Sair")
+        opcao = input("Escolha uma opção: ").strip()
+
+        if opcao == "1":
+            opcao_buscar_pais(nomes, info)
+        elif opcao == "2":
+            opcao_listar_por_regiao(info)
+        elif opcao == "3":
+            opcao_comparar_desempenho(nomes)
+        elif opcao == "4":
+            print("\nEncerrando. Até mais!")
+            break
+        else:
+            print("\nOpção inválida, tente novamente.")
 
 
 
@@ -211,10 +243,12 @@ if __name__ == "__main__":
     print(nomes[:5])
     print(info[nomes[0]])
 
-    vetor_teste = ["Brasil", "Argentina", "Chile", "Uruguai"]
-    print(busca_sequencial(vetor_teste, "Chile"))   # esperado: 2
-    print(busca_sequencial(vetor_teste, "XPTO"))    # esperado: -1
+    menu_principal()
 
-    vetor_teste = sorted(["Brasil", "Argentina", "Chile", "Uruguai"])
-    print(busca_binaria(vetor_teste, "Chile"))
-    print(busca_binaria(vetor_teste, "XPTO"))
+    # vetor_teste = ["Brasil", "Argentina", "Chile", "Uruguai"]
+    # print(busca_sequencial(vetor_teste, "Chile"))   # esperado: 2
+    # print(busca_sequencial(vetor_teste, "XPTO"))    # esperado: -1
+
+    # vetor_teste = sorted(["Brasil", "Argentina", "Chile", "Uruguai"])
+    # print(busca_binaria(vetor_teste, "Chile"))
+    # print(busca_binaria(vetor_teste, "XPTO"))
