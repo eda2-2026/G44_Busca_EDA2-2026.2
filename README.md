@@ -1,8 +1,6 @@
 # Consultor de Países — Busca Sequencial x Busca Binária
 
-Trabalho de Estruturas de Dados 2 — Algoritmos de Busca.
-Em desenvolvimento.
-
+Repositório dedicado ao Trabalho 1 na turma de Estruturas de Dados 2 do 2º semestre de 2026.
 
 ## Aluna
 
@@ -11,8 +9,6 @@ Em desenvolvimento.
 | 231035455 | Letícia Maria de Jesus Lopes    |
 
 ---
-
-# Consultor de Países
 
 ## Sobre
 
