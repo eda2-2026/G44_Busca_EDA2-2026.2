@@ -181,7 +181,24 @@ def opcao_buscar_pais(nomes, info):
         print(f"   Área:      {area:,.0f} km²")
 
 
+def opcao_listar_por_regiao(info):
+    """Lista todos os países de uma região escolhida pelo usuário."""
+    regioes_disponiveis = sorted(set(d["regiao"] for d in info.values()))
+    print("\nRegiões disponíveis:", ", ".join(regioes_disponiveis))
+    regiao_escolhida = input("Digite a região que deseja listar: ").strip()
 
+    encontrados = [
+        nome for nome, dados in info.items()
+        if dados["regiao"].lower() == regiao_escolhida.lower()
+    ]
+
+    if not encontrados:
+        print(f"\nNenhum país encontrado na região '{regiao_escolhida}'.")
+        return
+
+    print(f"\n{len(encontrados)} países encontrados em {regiao_escolhida}:")
+    for nome in sorted(encontrados):
+        print(f"  - {nome}")
 
 
 
