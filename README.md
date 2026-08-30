@@ -10,16 +10,35 @@ Repositório dedicado ao Trabalho 1 na turma de Estruturas de Dados 2 do 2º sem
 
 ---
 
-## Sobre
+## O problema
 
-App de linha de comando que resolve um problema real e simples:
-**consultar rapidamente informações de qualquer país do mundo**: capital,
-região e área, usando como motor de busca dois algoritmos estudados
-na disciplina: **Busca Sequencial** e **Busca Binária**.
+Quando você quer saber a capital, a região ou o tamanho de um país, o
+normal é abrir o Google, cair numa Wikipédia, esperar carregar, e ler
+um monte de informação só pra achar aquele um dado que você queria. E
+se você quer comparar países de uma mesma região, é ainda mais
+trabalhoso.
 
-O usuário escolhe qual algoritmo usar pra localizar o país, e o app mostra
-o tempo que a busca levou, tornando visível, na prática, a diferença de
-desempenho entre O(n) e O(log n).
+## A solução
+
+O **Consultor de Países** resolve isso de um jeito direto: você digita
+o nome do país no terminal, e em milissegundos recebe capital, região,
+sub-região e área — sem abrir navegador, sem anúncio, sem distração.
+
+E tem um diferencial a mais: por baixo do capô, a busca roda usando dois
+algoritmos diferentes (sequencial e binário), e o app mostra o tempo que
+cada um levou. Além de resolver o problema prático de consulta, isso
+deixa visível, na prática, o motivo de um algoritmo bem escolhido fazer
+diferença de verdade.
+
+## O que dá pra fazer com ele
+
+- **Buscar um país e ver os detalhes na hora** (capital, região,
+  sub-região, área), escolhendo se quer usar busca sequencial ou binária
+- **Listar todos os países de uma região**, pra quem só sabe o
+  continente e quer explorar as opções
+- **Comparar o desempenho dos dois algoritmos** com um gráfico gerado
+  automaticamente, mostrando a diferença de tempo em diferentes
+  tamanhos de lista
 
 ## Fonte de dados
 
@@ -45,16 +64,6 @@ python busca_paises.py
 
 Na primeira execução, o app baixa os dados e salva em `src/paises_cache.json`, pra não precisar baixar de novo toda vez.
 
-## Funcionalidades
-
-1. **Buscar informações de um país**: digite o nome (em inglês) e escolha
-   o algoritmo: sequencial ou binário. O app mostra a capital, região,
-   sub-região, área e o tempo de execução da busca.
-2. **Listar países por região**: veja todos os países de uma região
-   (África, Américas, Ásia, Europa, Oceania).
-3. **Comparar desempenho**: roda um benchmark completo dos dois
-   algoritmos em vários tamanhos de entrada e gera um gráfico comparativo.
-
 ## Estruturas e algoritmos usados
 
 - **Vetor (`list`)**: armazena os nomes dos países, usado como estrutura
@@ -66,7 +75,10 @@ Na primeira execução, o app baixa os dados e salva em `src/paises_cache.json`,
 - **Busca Binária**: divide o vetor ordenado ao meio a cada tentativa —
   O(log n). Exige que o vetor esteja ordenado antes da busca.
 
-## Estrutura do código (`src/busca_paises.py`)
+<details>
+<summary><strong>Detalhes técnicos do código</strong> (clique pra expandir)</summary>
+
+### Estrutura do código (`src/busca_paises.py`)
 
 | Camada | Função | O que faz |
 |---|---|---|
@@ -80,6 +92,8 @@ Na primeira execução, o app baixa os dados e salva em `src/paises_cache.json`,
 | App | `opcao_listar_por_regiao(...)` | Lista países de uma região |
 | App | `opcao_comparar_desempenho(...)` | Aciona o benchmark pelo menu |
 | App | `menu_principal()` | Loop do menu interativo |
+
+</details>
 
 ## Resultados do experimento
 
