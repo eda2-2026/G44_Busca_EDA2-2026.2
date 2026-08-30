@@ -99,30 +99,9 @@ Execução real com os 250 países do dataset, 200 repetições por medição:
 
 ## Conclusão
 
-Os resultados confirmam, na prática, o que a teoria prevê para o **pior
-caso**: a busca sequencial cresce de forma aproximadamente linear com o
-tamanho da entrada (de 0.84 µs com 10 países para 24.38 µs com 200
-países), enquanto a busca binária se mantém consistentemente mais rápida
-e estável, mesmo em conjuntos maiores — o comportamento esperado de
-O(n) contra O(log n).
+Os resultados bateram com o esperado: no pior caso, a busca sequencial foi ficando cada vez mais lenta conforme a lista cresceu (de 0.84 µs com 10 países pra 24.38 µs com 200), enquanto a busca binária se manteve bem mais rápida e estável. Isso é o O(n) contra o O(log n) na prática.
 
-Já o **caso médio** (busca por um país aleatório que existe na lista)
-apresenta mais variação entre as execuções — por exemplo, em n=250 o
-tempo da sequencial no caso médio (25.49 µs) chegou a superar o do pior
-caso (16.90 µs). Isso não é uma falha do algoritmo, e sim ruído esperado:
-como o país sorteado muda a cada execução, às vezes ele cai perto do
-início do vetor (busca rápida) e às vezes perto do fim (busca lenta). É
-justamente por isso que o experimento roda 200 repetições por medição e
-por que o pior caso é a métrica mais confiável para observar a tendência
-assintótica dos algoritmos.
+No caso médio os números variam mais, porque dependem de qual país é sorteado em cada execução — às vezes ele cai perto do início da lista, às vezes perto do fim. Por isso rodei 200 repetições por medição e usei principalmente o pior caso pra comparar os dois algoritmos de forma mais confiável.
 
-Na prática, a busca sequencial continua sendo uma escolha razoável para
-listas pequenas ou que mudam com frequência, já que não exige nenhuma
-preparação prévia dos dados. Já a busca binária compensa claramente em
-listas maiores e relativamente estáveis — como o cadastro de países,
-que muda muito raramente — pois o custo de mantê-la ordenada se paga
-rapidamente com buscas muito mais rápidas depois.
+No fim, a busca sequencial ainda é uma opção razoável pra listas pequenas ou que mudam bastante, já que não precisa de preparação nenhuma. Já a busca binária compensa mais em listas grandes e estáveis, como essa de países, que quase não muda — o custo de manter ordenado se paga rápido com buscas bem mais rápidas depois.
 
-## Vídeo de apresentação
-
-*(cole aqui o link do vídeo antes da entrega)*
