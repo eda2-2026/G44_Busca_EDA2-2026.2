@@ -5,6 +5,9 @@ motor de busca sobre dados reais de países.
 """
 import json
 import os
+import random
+import time
+import statistics
 import requests
 
 API_URL = "https://raw.githubusercontent.com/mledoze/countries/master/dist/countries.json"
@@ -69,6 +72,52 @@ def busca_binaria(vetor_ordenado, chave):
         else:
             fim = meio - 1
     return -1
+
+def medir_tempo(func, vetor, chave, repeticoes=200):
+    """Executa a função de busca várias vezes e retorna o tempo médio."""
+    tempos = []
+    for _ in range(repeticoes):
+        inicio = time.perf_counter()
+        func(vetor, chave)
+        fim = time.perf_counter()
+        tempos.append(fim - inicio)
+    return statistics.mean(tempos)
+
+def rodar_experimento(nomes):
+    """Compara busca sequencial e binária em vários tamanhos de entrada."""
+    tamanhos = [10, 25, 50, 100, 150, 200, len(nomes)]
+    tamanhos = sorted(set(t for t in tamanhos if t <= len(nomes)))
+
+    resultados = {
+        "tamanhos": [], "seq_pior_caso": [], "bin_pior_caso": [],
+        "seq_medio_caso": [], "bin_medio_caso": [],
+    }
+
+    for n in tamanhos:
+        subconjunto = nomes[:n]
+        vetor_ordenado = sorted(subconjunto)
+        chave_inexistente = "___PAIS_INEXISTENTE___"
+        chave_aleatoria = random.choice(subconjunto)
+
+        t_seq_pior = medir_tempo(busca_sequencial, subconjunto, chave_inexistente)
+        t_bin_pior = medir_tempo(busca_binaria, vetor_ordenado, chave_inexistente)
+        t_seq_medio = medir_tempo(busca_sequencial, subconjunto, chave_aleatoria)
+        t_bin_medio = medir_tempo(busca_binaria, vetor_ordenado, chave_aleatoria)
+
+        resultados["tamanhos"].append(n)
+        resultados["seq_pior_caso"].append(t_seq_pior)
+        resultados["bin_pior_caso"].append(t_bin_pior)
+        resultados["seq_medio_caso"].append(t_seq_medio)
+        resultados["bin_medio_caso"].append(t_bin_medio)
+
+        print(
+            f"n={n:4d} | Seq(pior)={t_seq_pior*1e6:8.2f} µs | "
+            f"Bin(pior)={t_bin_pior*1e6:8.2f} µs | "
+            f"Seq(médio)={t_seq_medio*1e6:8.2f} µs | "
+            f"Bin(médio)={t_bin_medio*1e6:8.2f} µs"
+        )
+
+    return resultados
 
 
 if __name__ == "__main__":
