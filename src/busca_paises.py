@@ -9,6 +9,7 @@ import random
 import time
 import statistics
 import requests
+import matplotlib.pyplot as plt
 
 API_URL = "https://raw.githubusercontent.com/mledoze/countries/master/dist/countries.json"
 CACHE_FILE = "paises_cache.json"
@@ -119,6 +120,27 @@ def rodar_experimento(nomes):
 
     return resultados
 
+def gerar_grafico(resultados, caminho_saida="comparacao_busca.png"):
+    tamanhos = resultados["tamanhos"]
+
+    plt.figure(figsize=(9, 6))
+    plt.plot(tamanhos, [t * 1e6 for t in resultados["seq_pior_caso"]],
+              marker="o", label="Busca Sequencial (pior caso)")
+    plt.plot(tamanhos, [t * 1e6 for t in resultados["bin_pior_caso"]],
+              marker="o", label="Busca Binária (pior caso)")
+    plt.plot(tamanhos, [t * 1e6 for t in resultados["seq_medio_caso"]],
+              marker="s", linestyle="--", label="Busca Sequencial (caso médio)")
+    plt.plot(tamanhos, [t * 1e6 for t in resultados["bin_medio_caso"]],
+              marker="s", linestyle="--", label="Busca Binária (caso médio)")
+
+    plt.xlabel("Tamanho da entrada (nº de países)")
+    plt.ylabel("Tempo médio de execução (microssegundos)")
+    plt.title("Busca Sequencial x Busca Binária\nDados reais: países (mledoze/countries)")
+    plt.legend()
+    plt.grid(True, alpha=0.3)
+    plt.tight_layout()
+    plt.savefig(caminho_saida, dpi=150)
+    print(f"\nGráfico salvo em: {caminho_saida}")
 
 if __name__ == "__main__":
     nomes, info = carregar_dados()
