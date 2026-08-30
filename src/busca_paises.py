@@ -120,7 +120,7 @@ def rodar_experimento(nomes):
 
     return resultados
 
-def gerar_grafico(resultados, caminho_saida="comparacao_busca.png"):
+def gerar_grafico(resultados, caminho_saida="../img/comparacao_busca.png"):
     tamanhos = resultados["tamanhos"]
 
     plt.figure(figsize=(9, 6))
@@ -239,16 +239,7 @@ def menu_principal():
 
 
 if __name__ == "__main__":
-    nomes, info = carregar_dados()
-    print(nomes[:5])
-    print(info[nomes[0]])
 
     menu_principal()
 
-    # vetor_teste = ["Brasil", "Argentina", "Chile", "Uruguai"]
-    # print(busca_sequencial(vetor_teste, "Chile"))   # esperado: 2
-    # print(busca_sequencial(vetor_teste, "XPTO"))    # esperado: -1
-
-    # vetor_teste = sorted(["Brasil", "Argentina", "Chile", "Uruguai"])
-    # print(busca_binaria(vetor_teste, "Chile"))
-    # print(busca_binaria(vetor_teste, "XPTO"))
+   
