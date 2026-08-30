@@ -142,6 +142,53 @@ def gerar_grafico(resultados, caminho_saida="comparacao_busca.png"):
     plt.savefig(caminho_saida, dpi=150)
     print(f"\nGráfico salvo em: {caminho_saida}")
 
+
+def opcao_buscar_pais(nomes, info):
+    """Deixa o usuário buscar um país por nome, escolhendo qual
+    algoritmo usar, e mostra os detalhes do país encontrado."""
+    nome_buscado = input("\nDigite o nome do país (em inglês, ex: Brazil): ").strip()
+
+    print("\nQual algoritmo você quer usar?")
+    print("  1 - Busca Sequencial (O(n))")
+    print("  2 - Busca Binária (O(log n))")
+    escolha = input("Escolha (1 ou 2): ").strip()
+
+    inicio = time.perf_counter()
+    if escolha == "2":
+        vetor_ordenado = sorted(nomes)
+        posicao = busca_binaria(vetor_ordenado, nome_buscado)
+        algoritmo_usado = "Busca Binária"
+    else:
+        posicao = busca_sequencial(nomes, nome_buscado)
+        algoritmo_usado = "Busca Sequencial"
+    fim = time.perf_counter()
+
+    tempo_gasto_us = (fim - inicio) * 1e6
+
+    if posicao == -1:
+        print(f"\n País '{nome_buscado}' não encontrado.")
+        print(f"   ({algoritmo_usado} — tempo: {tempo_gasto_us:.2f} µs)")
+        return
+
+    detalhes = info.get(nome_buscado, {})
+    print(f"\n País encontrado! ({algoritmo_usado} — tempo: {tempo_gasto_us:.2f} µs)")
+    print(f"   Nome:      {nome_buscado}")
+    print(f"   Capital:   {detalhes.get('capital', '?')}")
+    print(f"   Região:    {detalhes.get('regiao', '?')}")
+    print(f"   Sub-região:{detalhes.get('subregiao', '?')}")
+    area = detalhes.get("area")
+    if area:
+        print(f"   Área:      {area:,.0f} km²")
+
+
+
+
+
+
+
+
+
+
 if __name__ == "__main__":
     nomes, info = carregar_dados()
     print(nomes[:5])
