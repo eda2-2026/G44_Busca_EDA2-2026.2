@@ -12,23 +12,16 @@ Repositório dedicado ao Trabalho 1 na turma de Estruturas de Dados 2 do 2º sem
 
 ## O problema
 
-Quando você quer saber a capital, a região ou o tamanho de um país, o
-normal é abrir o Google, cair numa Wikipédia, esperar carregar, e ler
-um monte de informação só pra achar aquele um dado que você queria. E
-se você quer comparar países de uma mesma região, é ainda mais
-trabalhoso.
+Quem trabalha comparando países, seja planejando uma viagem por vários destinos, montando um relatório, ou só estudando geografia, acaba esbarrando sempre no mesmo obstáculo: os dados estão espalhados. Cada país abre numa página diferente, em formatos diferentes, com muitas informações misturadas no meio do que você realmente precisa. Comparar cinco ou dez países vira um trabalho manual cansativo, de abrir aba por aba e copiar dado por dado.
+ 
 
 ## A solução
 
-O **Consultor de Países** resolve isso de um jeito direto: você digita
-o nome do país no terminal, e em milissegundos recebe capital, região,
-sub-região e área — sem abrir navegador, sem anúncio, sem distração.
-
-E tem um diferencial a mais: por baixo do capô, a busca roda usando dois
-algoritmos diferentes (sequencial e binário), e o app mostra o tempo que
-cada um levou. Além de resolver o problema prático de consulta, isso
-deixa visível, na prática, o motivo de um algoritmo bem escolhido fazer
-diferença de verdade.
+O **Consultor de Países** centraliza isso: uma ferramenta de linha de comando onde você digita o nome do país e recebe na hora só o essencial: capital, região, sub-região e área, sem precisar navegar por página nenhuma. E como funciona por comando, dá pra consultar vários países em sequência rapidamente, ou até listar todos os países de uma região de
+uma vez só.
+ 
+Essa busca roda em cima de dois algoritmos
+diferentes: sequencial e binário, o que dá um motivo a mais pro projeto existir: além de resolver o problema prático de consulta, ele deixa visível, na prática, o quanto escolher bem o algoritmo de busca faz diferença real de desempenho.
 
 ## O que dá pra fazer com ele
 
@@ -115,7 +108,7 @@ Execução real com os 250 países do dataset, 200 repetições por medição:
 
 Os resultados bateram com o esperado: no pior caso, a busca sequencial foi ficando cada vez mais lenta conforme a lista cresceu (de 0.84 µs com 10 países pra 24.38 µs com 200), enquanto a busca binária se manteve bem mais rápida e estável. Isso é o O(n) contra o O(log n) na prática.
 
-No caso médio os números variam mais, porque dependem de qual país é sorteado em cada execução — às vezes ele cai perto do início da lista, às vezes perto do fim. Por isso rodei 200 repetições por medição e usei principalmente o pior caso pra comparar os dois algoritmos de forma mais confiável.
+No caso médio os números variam mais, porque dependem de qual país é sorteado em cada execução, às vezes ele cai perto do início da lista, às vezes perto do fim. Por isso rodei 200 repetições por medição e usei principalmente o pior caso pra comparar os dois algoritmos de forma mais confiável.
 
-No fim, a busca sequencial ainda é uma opção razoável pra listas pequenas ou que mudam bastante, já que não precisa de preparação nenhuma. Já a busca binária compensa mais em listas grandes e estáveis, como essa de países, que quase não muda — o custo de manter ordenado se paga rápido com buscas bem mais rápidas depois.
+No fim, a busca sequencial ainda é uma opção razoável pra listas pequenas ou que mudam bastante, já que não precisa de preparação nenhuma. Já a busca binária compensa mais em listas grandes e estáveis, como essa de países, que quase não muda.
 
