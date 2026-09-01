@@ -49,7 +49,7 @@ API REST Countries. Sem necessidade de chave de API.
 Requer Python 3 e as bibliotecas em `requirements.txt`.
 
 ```bash
-cd G43_Busca_EDA2-2026.2
+cd G44_Busca_EDA2-2026.2
 pip install -r requirements.txt
 cd src
 python busca_paises.py
